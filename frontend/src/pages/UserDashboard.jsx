@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import axios from 'axios';
 
 const UserDashboard = () => {
   const { user } = useAuth();
@@ -9,10 +10,14 @@ const UserDashboard = () => {
   const [email, setEmail] = useState(user?.email || '');
   const navigate = useNavigate();
 
-  const handleSave = () => {
-    // In a real app, you'd make an API call to update user info
-    setIsEditing(false);
-    alert('Profile updated successfully!');
+  const handleSave = async () => {
+    try {
+      await axios.put('http://localhost:5000/api/users/profile', { username });
+      setIsEditing(false);
+      alert('Profile updated successfully!');
+    } catch (error) {
+      alert('Failed to update profile');
+    }
   };
 
   return (

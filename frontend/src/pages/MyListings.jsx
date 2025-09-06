@@ -15,10 +15,8 @@ const MyListings = () => {
 
   const fetchMyProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/products');
-      // Filter products by current user
-      const myProducts = response.data.filter(product => product.ownerId === user.id);
-      setProducts(myProducts);
+      const response = await axios.get('http://localhost:5000/api/users/my-products');
+      setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
